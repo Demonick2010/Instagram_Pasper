@@ -59,6 +59,8 @@ namespace InstagrammPasper
             // Go to user page
             driver.Navigate().GoToUrl(StartAdress.adress);
 
+            /* LOGIN PAGE */
+
             // Find element by name
             var formElement = driver.FindElement(By.TagName("form"));
             var usernameElement = formElement.FindElement(By.Name("username"));
@@ -70,7 +72,11 @@ namespace InstagrammPasper
             passwordElement.SendKeys(TempUserData.UserPassword);
             loginButton.Click();
 
-            // 
+            /**************/
+
+            /*Test*/
+            //driver.FindElement(By.XPath("/html//div[@id='react-root']/section/nav/div[2]//a[]")).Click();
+            /**/
         }
 
         private void InitData(object sender, EventArgs e)
@@ -102,14 +108,25 @@ namespace InstagrammPasper
                 // Check for null
                 if (_am == null)
                 {
+                    // Set warning message to Text box
                     ResultBlock.Foreground = new SolidColorBrush(Colors.Red);
-                    ResultBlock.Text = "Data load failed!";
+                    ResultBlock.Text = "Data load failed!\nPlease, set user data to Settings!";
                     return;
                 }
 
                 // Set values to static model
                 TempUserData.UserName = _am.UserName;
                 TempUserData.UserPassword = _am.UserPassword;
+
+                // Set successful message to Text box
+                ResultBlock.Foreground = new SolidColorBrush(Colors.Green);
+                ResultBlock.Text = "Data load successful!";
+            }
+            else
+            {
+                // Set warning message to Text box
+                ResultBlock.Foreground = new SolidColorBrush(Colors.Red);
+                ResultBlock.Text = "Please, set user data to Settings!";
             }
         }
     }
