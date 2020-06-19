@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InstagrammPasper.Classes;
 using InstagrammPasper.Models;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -48,35 +49,8 @@ namespace InstagrammPasper
 
         private void Pasper_Click(object sender, RoutedEventArgs e)
         {
-            // Browser options
-            var mozillaOptions = new FirefoxOptions();
-            mozillaOptions.PageLoadStrategy = PageLoadStrategy.Normal;
-
-            // Init web driver
-            IWebDriver driver = new FirefoxDriver(mozillaOptions);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-            // Go to user page
-            driver.Navigate().GoToUrl(StartAdress.adress);
-
-            /* LOGIN PAGE */
-
-            // Find element by name
-            var formElement = driver.FindElement(By.TagName("form"));
-            var usernameElement = formElement.FindElement(By.Name("username"));
-            var passwordElement = formElement.FindElement(By.Name("password"));
-            var loginButton = formElement.FindElement(By.TagName("button"));
-
-            // Set username
-            usernameElement.SendKeys(TempUserData.UserName);
-            passwordElement.SendKeys(TempUserData.UserPassword);
-            loginButton.Click();
-
-            /**************/
-
-            /*Test*/
-            //driver.FindElement(By.XPath("/html//div[@id='react-root']/section/nav/div[2]//a[]")).Click();
-            /**/
+            StartPasper sp = new StartPasper();
+            sp.StartPasperProcess();
         }
 
         private void InitData(object sender, EventArgs e)
@@ -86,6 +60,9 @@ namespace InstagrammPasper
             string _fileName = "settings.json";
             string _fullPath = _path + _fileName;
 
+            string _pageLinkFileName = "pageLinks.json";
+            string pathToList = _path + _pageLinkFileName;
+
             // Init Account Model
             AccountModel _am = new AccountModel();
 
@@ -94,24 +71,48 @@ namespace InstagrammPasper
                 var serializer = new JsonSerializer();
 
                 // Deserialize name and pass
-                using (var sw = new StreamReader(_fullPath))
+                using var sw = new StreamReader(_fullPath);
+                using (var reader = new JsonTextReader(sw))
                 {
-                    using (var reader = new JsonTextReader(sw))
+                    _am = serializer.Deserialize<AccountModel>(reader);
+                    reader.Close();
+                }
+                sw.Close();
+
+                // Check, if file exists
+                if (File.Exists(pathToList))
+                {
+                    // Deserialize Page link list
+                    using var sw2 = new StreamReader(pathToList);
+                    using (var reader = new JsonTextReader(sw2))
                     {
-                        _am = serializer.Deserialize<AccountModel>(reader);
+                        PageLinkArray.PageListLink = serializer.Deserialize<List<string>>(reader);
                         reader.Close();
                     }
 
-                    sw.Close();
-                }
+                    sw2.Close();
 
-                // Check for null
-                if (_am == null)
+                    // Check for null
+                    if (PageLinkArray.PageListLink == null)
+                    {
+                        // Set warning message to Text box
+                        ResultBlock.Foreground = new SolidColorBrush(Colors.Red);
+                        ResultBlock.Text = "List link data load failed!\nPlease, add links to list!";
+                        return;
+                    }
+                    else
+                    {
+                        // Set successful message to Text box
+                        ResultBlock.Foreground = new SolidColorBrush(Colors.Green);
+                        ResultBlock.Text +=
+                            $"\nPage Link Data load successful!\nLink count: {PageLinkArray.PageListLink.Count}";
+                    }
+                }
+                else
                 {
                     // Set warning message to Text box
                     ResultBlock.Foreground = new SolidColorBrush(Colors.Red);
-                    ResultBlock.Text = "Data load failed!\nPlease, set user data to Settings!";
-                    return;
+                    ResultBlock.Text += "List link data file not found!\nPlease, add links to list!";
                 }
 
                 // Set values to static model
@@ -120,13 +121,13 @@ namespace InstagrammPasper
 
                 // Set successful message to Text box
                 ResultBlock.Foreground = new SolidColorBrush(Colors.Green);
-                ResultBlock.Text = "Data load successful!";
+                ResultBlock.Text += "\nUser Data load successful!";
             }
             else
             {
                 // Set warning message to Text box
                 ResultBlock.Foreground = new SolidColorBrush(Colors.Red);
-                ResultBlock.Text = "Please, set user data to Settings!";
+                ResultBlock.Text += "\nPlease, set user data to Settings!";
             }
         }
     }

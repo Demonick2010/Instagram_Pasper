@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,6 +19,9 @@ namespace InstagrammPasper
         string _path = $"{Directory.GetCurrentDirectory()}\\Setting\\";
         string _fileName = "settings.json";
         string _fullPath;
+
+        string _pageLinkFileName = "pageLinks.json";
+
         AccountModel _am;
 
         public Settings()
@@ -75,7 +80,7 @@ namespace InstagrammPasper
 
                 // Print success message
                 ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
-                ErrorLabel.Content = "Save data success!";
+                ErrorLabel.Content = "\nSave data success!";
 
                 // Set save button to disable
                 SaveButton.IsEnabled = false;
@@ -93,6 +98,50 @@ namespace InstagrammPasper
 
         private void InitAccountData(object sender, RoutedEventArgs e)
         {
+            string pathToFile = _path + _pageLinkFileName;
+
+            // Check Address List existing
+            if (File.Exists(pathToFile))
+            {
+                var serializer = new JsonSerializer(); 
+
+                // Deserialize name and pass
+                using var sr = new StreamReader(pathToFile);
+                using (var reader = new JsonTextReader(sr))
+                {
+                    PageLinkArray.PageListLink = serializer.Deserialize<List<string>>(reader);
+                    reader.Close();
+                }
+                sr.Close();
+
+                // Check null
+                if (PageLinkArray.PageListLink != null)
+                {
+                    // Change color and set successful message
+                    ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
+                    ErrorLabel.Content += $"Page link list load success!\nList count: {PageLinkArray.PageListLink.Count}";
+
+                    // Add dresses to text block
+                    foreach (var item in PageLinkArray.PageListLink)
+                    {
+                        PageLinkBlock.Text += item;
+                        PageLinkBlock.Text += "\r\n";
+                    }
+                }
+                else
+                {
+                    // Change color and set failed message
+                    ErrorLabel.Foreground = new SolidColorBrush(Colors.Red);
+                    ErrorLabel.Content += "Page link list load FAILED!\nPlease, add links to list!";
+                }
+            }
+            else
+            {
+                // Change color and set failed message
+                ErrorLabel.Foreground = new SolidColorBrush(Colors.Red);
+                ErrorLabel.Content += "Page link list NOT EXISTS!\nPlease, add links to list!";
+            }
+
             if (File.Exists(_fullPath))
             {
                 // Save button disable
@@ -115,7 +164,7 @@ namespace InstagrammPasper
                 if (_am == null)
                 {
                     ErrorLabel.Foreground = new SolidColorBrush(Colors.Red);
-                    ErrorLabel.Content = "Data load failed!";
+                    ErrorLabel.Content += "\nAccount Data load failed!";
                     File.Delete(_fullPath);
                     return;
                 }
@@ -126,7 +175,7 @@ namespace InstagrammPasper
 
                 // Change color and set successful message
                 ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
-                ErrorLabel.Content = "Data load success!";
+                ErrorLabel.Content += "\nAccount Data load success!";
             }
             else
             {
@@ -150,6 +199,113 @@ namespace InstagrammPasper
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void SaveListButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PageLinkBlock != null)
+            {
+                string pathToFile = _path + _pageLinkFileName;
+                List<string> listDeserialize;
+
+                string tempString = PageLinkBlock.Text;
+                var tempArrayLinks = tempString.Replace("\r\n", ",").Split(',').ToList();
+
+                // Create JSON file if not exists
+                if (!File.Exists(pathToFile))
+                {
+                    var file = File.Create(pathToFile);
+                    file.Close();
+                }
+
+                var serializer = new JsonSerializer();
+
+                // Deserialize name and pass
+                using var sr = new StreamReader(pathToFile);
+                using (var reader = new JsonTextReader(sr))
+                {
+                    listDeserialize = serializer.Deserialize<List<string>>(reader);
+                    reader.Close();
+                }
+                sr.Close();
+
+                // Check deserialize list for null
+                if (listDeserialize != null)
+                {
+                    // Clear List
+                    listDeserialize.Clear();
+
+                    // Add all data to list
+                    listDeserialize.AddRange(tempArrayLinks);
+
+                    // Add values to static list
+                    PageLinkArray.PageListLink.Clear();
+                    PageLinkArray.PageListLink.AddRange(listDeserialize);
+                }
+                else
+                {
+                    listDeserialize = new List<string>();
+                    listDeserialize.AddRange(tempArrayLinks);
+
+                    // Add values to static list
+                    PageLinkArray.PageListLink = new List<string>();
+                    PageLinkArray.PageListLink.AddRange(listDeserialize);
+                }
+
+                // Check for empty items in array
+                for (int i = 0; i < PageLinkArray.PageListLink.Count; i++)
+                {
+                    if (string.IsNullOrWhiteSpace(PageLinkArray.PageListLink[i]))
+                        PageLinkArray.PageListLink.Remove(PageLinkArray.PageListLink[i]);
+                }
+
+                // Save values to JSON file
+                using var sw = new StreamWriter(pathToFile);
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, PageLinkArray.PageListLink);
+                    writer.Close();
+                }
+                sw.Close();
+
+                ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
+                ErrorLabel.Content = "\nPage address link data Saved!";
+            }
+            else
+            {
+                // Path to file
+                string pathToFile = _path + _pageLinkFileName;
+                List<string> listDeserialize;
+
+                // Create JSON file if not exists
+                if (!File.Exists(pathToFile))
+                {
+                    var file = File.Create(pathToFile);
+                    file.Close();
+                }
+
+                var serializer = new JsonSerializer();
+
+                // Deserialize name and pass
+                using var sr = new StreamReader(pathToFile);
+                using (var reader = new JsonTextReader(sr))
+                {
+                    listDeserialize = serializer.Deserialize<List<string>>(reader);
+                    reader.Close();
+                }
+                sr.Close();
+
+                if (listDeserialize == null)
+                {
+                    ErrorLabel.Foreground = new SolidColorBrush(Colors.Red);
+                    ErrorLabel.Content += "\nPage adress link is empty!\nPlease, add addresses to list";
+                }
+                else
+                {
+                    ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
+                    ErrorLabel.Content += "\nPage adress link data loaded!";
+                }
+            }
         }
     }
 }

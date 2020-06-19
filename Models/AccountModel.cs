@@ -18,6 +18,11 @@ namespace InstagrammPasper.Models
 
     public static class StartAdress
     {
-        public static string adress = "https://instagram.com";
+        public static string adress = "https://www.instagram.com/";
+    }
+
+    public static class PageLinkArray
+    {
+        public static List<string> PageListLink { get; set; } = new List<string>();
     }
 }

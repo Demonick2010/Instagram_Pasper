@@ -28,6 +28,10 @@
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Text="Profile Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"></TextBlock>
         </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <TextBlock Text="Pasper page list" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"></TextBlock>
+        </StackPanel>
         
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Grid>
@@ -75,10 +79,37 @@
                     <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Center" Click="Cancel_Click"></Button>
                 </StackPanel>
                 
-                <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="10">
-                    <Label Content="" x:Name="ErrorLabel" Background="#FFD1D1D1" MinWidth="340" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Foreground="Red" FontWeight="Bold" FontSize="18"></Label>
+                <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="10">
+                    <Label Content="" x:Name="ErrorLabel" Background="#FFD1D1D1" Height="Auto" MinWidth="340" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Foreground="Red" FontWeight="Bold" FontSize="18"></Label>
                 </StackPanel>
                 
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Content="Add page link to list:" FontSize="16" Padding="5"></Label>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBox Width="380" Height="100" Background="Azure" x:Name="PageLinkBlock" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch"></TextBox>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="SaveListButton" Content="Save to list" Margin="0 10 0 0" Click="SaveListButton_Click"></Button>
+                </StackPanel>
+
             </Grid>
         </StackPanel>
                 
