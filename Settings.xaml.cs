@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using InstagrammPasper.Classes;
 using InstagrammPasper.Models;
-using Newtonsoft.Json;
 
 
 namespace InstagrammPasper
@@ -16,7 +16,7 @@ namespace InstagrammPasper
     public partial class Settings : Window
     {
         // JSON file path
-        ConstantPaths cp;
+        ConstantPaths _cp;
         string _fileName = "settings.json";
         string _fullPath;
         string _pageLinkFileName = "pageLinks.json";
@@ -26,8 +26,8 @@ namespace InstagrammPasper
         public Settings()
         {
             InitializeComponent();
-            cp = new ConstantPaths();
-            _fullPath = cp.GetFullPath(_fileName);
+            _cp = new ConstantPaths();
+            _fullPath = _cp.GetFullPath(_fileName);
             _am = new AccountModel();
         }
 
@@ -56,8 +56,8 @@ namespace InstagrammPasper
             if (IsSaved.IsChecked ?? false)
             {
                 // Check, if directory not exists, create directory
-                if (!Directory.Exists(cp.PathToJsonFolder))
-                    Directory.CreateDirectory(cp.PathToJsonFolder);
+                if (!Directory.Exists(_cp.PathToJsonFolder))
+                    Directory.CreateDirectory(_cp.PathToJsonFolder);
 
                 // Create JSON file if not exists
                 if (!File.Exists(_fullPath))
@@ -66,17 +66,8 @@ namespace InstagrammPasper
                     file.Close();
                 }
 
-                var serializer = new JsonSerializer();
-
-                using (var sw = new StreamWriter(_fullPath))
-                {
-                    using (JsonWriter writer = new JsonTextWriter(sw))
-                    {
-                        serializer.Serialize(writer, _am);
-                        writer.Close();
-                    }
-                    sw.Close();
-                }
+                UniversalSerializeDataClass<AccountModel> serializeData = new UniversalSerializeDataClass<AccountModel>();
+                serializeData.SerializeData(_am, _fullPath);
 
                 // Print success message
                 ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
@@ -98,21 +89,16 @@ namespace InstagrammPasper
 
         private void InitAccountData(object sender, RoutedEventArgs e)
         {
-            string pathToFile = cp.GetFullPath(_pageLinkFileName);
+            string pathToFile = _cp.GetFullPath(_pageLinkFileName);
 
             // Check Address List existing
             if (File.Exists(pathToFile))
             {
-                var serializer = new JsonSerializer(); 
+                //var serializer = new JsonSerializer(); 
 
                 // Deserialize name and pass
-                using var sr = new StreamReader(pathToFile);
-                using (var reader = new JsonTextReader(sr))
-                {
-                    PageLinkArray.PageListLink = serializer.Deserialize<List<string>>(reader);
-                    reader.Close();
-                }
-                sr.Close();
+                UniversalSerializeDataClass<List<string>> deserilazeData = new UniversalSerializeDataClass<List<string>>();
+                PageLinkArray.PageListLink = deserilazeData.DeserializeData(pathToFile);
 
                 // Check null
                 if (PageLinkArray.PageListLink != null)
@@ -147,18 +133,9 @@ namespace InstagrammPasper
                 // Save button disable
                 SaveButton.IsEnabled = false;
 
-                var serializer = new JsonSerializer(); 
-
                 // Deserialize name and pass
-                using (var sw = new StreamReader(_fullPath))
-                {
-                    using (var reader = new JsonTextReader(sw))
-                    {
-                        _am = serializer.Deserialize<AccountModel>(reader);
-                        reader.Close();
-                    }
-                    sw.Close();
-                }
+                UniversalSerializeDataClass<AccountModel> deSerializeData = new UniversalSerializeDataClass<AccountModel>();
+                _am = deSerializeData.DeserializeData(_fullPath);
 
                 // Check for null
                 if (_am == null)
@@ -205,7 +182,7 @@ namespace InstagrammPasper
         {
             if (PageLinkBlock != null)
             {
-                string pathToFile = cp.GetFullPath(_pageLinkFileName);
+                string pathToFile = _cp.GetFullPath(_pageLinkFileName);
                 List<string> listDeserialize;
 
                 string tempString = PageLinkBlock.Text;
@@ -218,16 +195,8 @@ namespace InstagrammPasper
                     file.Close();
                 }
 
-                var serializer = new JsonSerializer();
-
-                // Deserialize name and pass
-                using var sr = new StreamReader(pathToFile);
-                using (var reader = new JsonTextReader(sr))
-                {
-                    listDeserialize = serializer.Deserialize<List<string>>(reader);
-                    reader.Close();
-                }
-                sr.Close();
+                UniversalSerializeDataClass<List<string>> deserializeData = new UniversalSerializeDataClass<List<string>>();
+                listDeserialize = deserializeData.DeserializeData(pathToFile);
 
                 // Check deserialize list for null
                 if (listDeserialize != null)
@@ -260,13 +229,8 @@ namespace InstagrammPasper
                 }
 
                 // Save values to JSON file
-                using var sw = new StreamWriter(pathToFile);
-                using (JsonWriter writer = new JsonTextWriter(sw))
-                {
-                    serializer.Serialize(writer, PageLinkArray.PageListLink);
-                    writer.Close();
-                }
-                sw.Close();
+                UniversalSerializeDataClass<List<string>> serializeData = new UniversalSerializeDataClass<List<string>>();
+                serializeData.SerializeData(PageLinkArray.PageListLink, pathToFile);
 
                 ErrorLabel.Foreground = new SolidColorBrush(Colors.Green);
                 ErrorLabel.Content = "\nPage address link data Saved!";
@@ -274,7 +238,7 @@ namespace InstagrammPasper
             else
             {
                 // Path to file
-                string pathToFile = cp.GetFullPath(_pageLinkFileName);
+                string pathToFile = _cp.GetFullPath(_pageLinkFileName);
                 List<string> listDeserialize;
 
                 // Create JSON file if not exists
@@ -284,16 +248,9 @@ namespace InstagrammPasper
                     file.Close();
                 }
 
-                var serializer = new JsonSerializer();
-
                 // Deserialize name and pass
-                using var sr = new StreamReader(pathToFile);
-                using (var reader = new JsonTextReader(sr))
-                {
-                    listDeserialize = serializer.Deserialize<List<string>>(reader);
-                    reader.Close();
-                }
-                sr.Close();
+                UniversalSerializeDataClass<List<string>> deserializeData = new UniversalSerializeDataClass<List<string>>();
+                listDeserialize = deserializeData.DeserializeData(pathToFile);
 
                 if (listDeserialize == null)
                 {

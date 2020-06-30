@@ -32,7 +32,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" >
             <Button Grid.Row="2" x:Name="Pasper" Content="Start parse" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="Pasper_Click"></Button>
-            <Button x:Name="ShowResult" Content="Show Result" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0"></Button>
+            <Button x:Name="ShowResult" Content="Show Result" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="ShowResult_Click" IsEnabled="True"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Grid.RowSpan="2">

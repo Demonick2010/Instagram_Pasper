@@ -146,5 +146,19 @@ namespace InstagrammPasper
                 messageBox.Text += "\nPlease, set user data to Settings!";
             }
         }
+
+        private async void ShowResult_Click(object sender, RoutedEventArgs e)
+        {
+            FindAllSame findAllSame = new FindAllSame();
+
+            ShowResult.IsEnabled = false;
+
+            await Task.Run(() =>
+            {
+                findAllSame.GetAllSomeData(GeTextBox());
+            });
+
+            ShowResult.IsEnabled = true;
+        }
     }
 }

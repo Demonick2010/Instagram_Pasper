@@ -131,7 +131,7 @@ namespace InstagrammPasper.Classes
 
                 // Find current following link
                 var allLink = headerBlock.FindElements(By.TagName("li"));
-                var followsCount = Convert.ToInt32(allLink[2].FindElement(By.TagName("span")).Text);
+                var followsCount = Convert.ToInt32(allLink[2].FindElement(By.TagName("span")).Text.Replace(" ", ""));
                 var pageName = headerBlock.FindElement(By.XPath("//div[@id='react-root']/section/main[@role='main']//section//h2")).Text;
                 
                 // Wait 4 seconds
@@ -148,7 +148,7 @@ namespace InstagrammPasper.Classes
 
                 // Needed vars
                 int tryTimes = 0;
-                int scrollDelay = 2000;
+                int scrollDelay = 1500;
                 int listPosition = 12;
 
                 while (true)
@@ -226,8 +226,8 @@ namespace InstagrammPasper.Classes
                     {
                         FollowName = name,
                         FollowPageAddress = link,
-                        SameFollowCount = 0,
-                        SameFollowPeople = null
+                        SameFollowCount = 0
+                        //SameFollowPeople = null
                     });
                 }
 

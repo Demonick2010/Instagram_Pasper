@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InstagrammPasper"
         AllowsTransparency="True"
         WindowStyle="None"
         mc:Ignorable="d"
@@ -76,7 +75,7 @@
                 </StackPanel>
                 
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="Cancel" Content="Cancel or/and Close" HorizontalAlignment="Center" Click="Cancel_Click"></Button>
+                    <Button x:Name="Cancel" Content="Cancel/Close" HorizontalAlignment="Center" Click="Cancel_Click"></Button>
                 </StackPanel>
                 
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="10">
