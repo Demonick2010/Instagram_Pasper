@@ -16,10 +16,9 @@ namespace InstagrammPasper
     public partial class Settings : Window
     {
         // JSON file path
-        string _path = $"{Directory.GetCurrentDirectory()}\\Setting\\";
+        ConstantPaths cp;
         string _fileName = "settings.json";
         string _fullPath;
-
         string _pageLinkFileName = "pageLinks.json";
 
         AccountModel _am;
@@ -27,7 +26,8 @@ namespace InstagrammPasper
         public Settings()
         {
             InitializeComponent();
-            _fullPath = _path + _fileName;
+            cp = new ConstantPaths();
+            _fullPath = cp.GetFullPath(_fileName);
             _am = new AccountModel();
         }
 
@@ -56,8 +56,8 @@ namespace InstagrammPasper
             if (IsSaved.IsChecked ?? false)
             {
                 // Check, if directory not exists, create directory
-                if (!Directory.Exists(_path))
-                    Directory.CreateDirectory(_path);
+                if (!Directory.Exists(cp.PathToJsonFolder))
+                    Directory.CreateDirectory(cp.PathToJsonFolder);
 
                 // Create JSON file if not exists
                 if (!File.Exists(_fullPath))
@@ -98,7 +98,7 @@ namespace InstagrammPasper
 
         private void InitAccountData(object sender, RoutedEventArgs e)
         {
-            string pathToFile = _path + _pageLinkFileName;
+            string pathToFile = cp.GetFullPath(_pageLinkFileName);
 
             // Check Address List existing
             if (File.Exists(pathToFile))
@@ -205,7 +205,7 @@ namespace InstagrammPasper
         {
             if (PageLinkBlock != null)
             {
-                string pathToFile = _path + _pageLinkFileName;
+                string pathToFile = cp.GetFullPath(_pageLinkFileName);
                 List<string> listDeserialize;
 
                 string tempString = PageLinkBlock.Text;
@@ -274,7 +274,7 @@ namespace InstagrammPasper
             else
             {
                 // Path to file
-                string pathToFile = _path + _pageLinkFileName;
+                string pathToFile = cp.GetFullPath(_pageLinkFileName);
                 List<string> listDeserialize;
 
                 // Create JSON file if not exists

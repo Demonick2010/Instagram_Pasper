@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InstagrammPasper"
         mc:Ignorable="d"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -19,29 +18,29 @@
             <ColumnDefinition Width="22*"/>
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="2">
             <StackPanel.Background>
                 <ImageBrush ImageSource="/instaBg.jpg" />
             </StackPanel.Background>
         </StackPanel>
-        
-        <StackPanel Grid.Column="0" Orientation="Horizontal" >
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" >
             <Border BorderBrush="AliceBlue" BorderThickness="4" ></Border>
-            <TextBlock  x:Name="ResultBlock" Text="" Background="#FFD4D4D4" Height="100" Width="300" VerticalAlignment="Top" Margin="10 10 0 0"/>
+            <TextBox x:Name="ResultBlock" Text="" Background="#FFD4D4D4" Height="124" Width="458" VerticalAlignment="Top" Margin="10 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch" FontSize="16" FontWeight="Bold" />
         </StackPanel>
-        
+
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" >
             <Button Grid.Row="2" x:Name="Pasper" Content="Start parse" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="Pasper_Click"></Button>
             <Button x:Name="ShowResult" Content="Show Result" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0"></Button>
         </StackPanel>
-        
+
         <StackPanel Grid.Column="1" Orientation="Vertical" Grid.RowSpan="2">
             <Button x:Name="Settings" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" RenderTransformOrigin="0.5,0.5" Click="Settings_Click"></Button>
             <Button x:Name="About" Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0"></Button>
             <Button x:Name="Quit" Content="Quit" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" Click="Quit_Click"></Button>
         </StackPanel>
-        
-        
+
+
     </Grid>
 </Window>

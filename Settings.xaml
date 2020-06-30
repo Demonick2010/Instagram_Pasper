@@ -76,7 +76,7 @@
                 </StackPanel>
                 
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Center" Click="Cancel_Click"></Button>
+                    <Button x:Name="Cancel" Content="Cancel or/and Close" HorizontalAlignment="Center" Click="Cancel_Click"></Button>
                 </StackPanel>
                 
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="10">
