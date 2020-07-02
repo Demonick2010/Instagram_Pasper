@@ -4,6 +4,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Version>0.3.0</Version>
+    <Authors>Artem Ionov</Authors>
+    <Company>Demonick Games</Company>
+    <Product>Instagramm following page pasper</Product>
+    <Description>Grab all following data by page link source, convert and save all to JSON file and save same data to XML file.</Description>
+    <Copyright>Demonick Games. All Rights Reserved!</Copyright>
+    <NeutralLanguage>English</NeutralLanguage>
+    <AssemblyVersion>0.3.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Selenium.Firefox.WebDriver" Version="0.26.0" />
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
