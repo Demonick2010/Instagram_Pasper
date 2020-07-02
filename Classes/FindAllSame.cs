@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,33 +9,53 @@ namespace InstagrammPasper.Classes
 {
     public class FindAllSame
     {
-        // TODO: Take same peoples from all lists
+        // Take same peoples from all lists
         public async void GetAllSomeData(TextBox resultTextBox)
         {
+            List<FollowModel> resultList = new List<FollowModel>();
+
             await Task.Run(() =>
             {
-                TakeSameTask(resultTextBox);
+                resultList = TakeSameTask(resultTextBox);
+            });
+
+            await Task.Run(() =>
+            {
+                resultList = CleanListData(resultList, resultTextBox);
+            });
+
+            await Task.Run(() =>
+            {
+                if (resultList != null)
+                    TestDataView(resultList, resultTextBox);
+                else
+                    SetMessage("Result list is empty...", false, resultTextBox);
             });
         }
 
-        private void TakeSameTask(TextBox resultTextBox)
+        private List<FollowModel> TakeSameTask(TextBox resultTextBox)
         {
             // Init current person model list
             FollowModel currentPersonFollowList = new FollowModel();
             List<FollowModel> findResultList = new List<FollowModel>();
+            var followList = FollowsList.Follows;
 
-            for (int firstPerson = 0; firstPerson < FollowsList.Follows.Count; firstPerson++)
+            SetMessage("Start search method...", false, resultTextBox);
+
+            for (int firstPerson = 0; firstPerson < followList.Count; firstPerson++)
             {
                 // Get data from List to current model
-                currentPersonFollowList = FollowsList.Follows[firstPerson];
+                currentPersonFollowList = followList[firstPerson];
+
                 SetMessage($"Current person: {currentPersonFollowList.PageOwnerName}", true, resultTextBox);
 
-                int secondPerson = firstPerson + 1;
-
-                if (secondPerson < FollowsList.Follows.Count)
+                for (int secondPerson = 0; secondPerson < followList.Count; secondPerson++)
                 {
+                    if (secondPerson == firstPerson)
+                        continue;
+
                     // Get next person data and contain
-                    var secondPersonFollowList = FollowsList.Follows[secondPerson];
+                    var secondPersonFollowList = followList[secondPerson];
                     SetMessage($"Person for check: {secondPersonFollowList.PageOwnerName}", true, resultTextBox);
 
                     // First person list cycle
@@ -47,55 +68,80 @@ namespace InstagrammPasper.Classes
                             if (currentPersonFollowList.FollowsData[firstPersonListIterator].FollowPageAddress ==
                                 secondPersonFollowList.FollowsData[secondPersonListIterator].FollowPageAddress)
                             {
-                                SetMessage($"Find! Current ID: {currentPersonFollowList.FollowsData[firstPersonListIterator]}\n Second person list ID: {secondPersonFollowList.FollowsData[secondPersonListIterator]}", true, resultTextBox);
+                                followList[firstPerson].FollowsData[firstPersonListIterator].SameFollowCount += 1;
+                                followList[firstPerson].FollowsData[firstPersonListIterator].SameFollowPeople.Add(secondPersonFollowList.PageOwnerName);
 
-                                // Change value in current model
-                                currentPersonFollowList.FollowsData[firstPersonListIterator].SameFollowCount += 1;
-                                currentPersonFollowList.FollowsData[firstPersonListIterator].SameFollowPeople.Add(secondPersonFollowList.PageOwnerName);
-
-                                // Change value in general array (v0.1)
-                                //FollowsList.Follows[firstPerson].FollowsData[firstPersonListIterator].SameFollowCount += 1;
-                                //FollowsList.Follows[firstPerson].FollowsData[firstPersonListIterator].SameFollowPeople.Add(secondPersonFollowList.FollowsData[secondPersonListIterator].FollowName);
-
-                                // Add data to filtered array
-                                findResultList.Add(currentPersonFollowList);
+                                followList[secondPerson].FollowsData.Remove(followList[secondPerson].FollowsData[secondPersonListIterator]);
+                                secondPersonListIterator--;
                             }
                         }
                     }
                 }
             }
+            return followList;
+        }
 
+        private List<FollowModel> CleanListData(List<FollowModel> findResultList, TextBox resultTextBox)
+        {
+            SetMessage("Clean wrong data from list...", false, resultTextBox);
+            var sortedList = findResultList;
+
+            // Start person cycle
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                // Start Data List cycle
+                for (int j = 0; j < sortedList[i].FollowsData.Count; j++)
+                {
+                    if (sortedList[i].FollowsData[j].SameFollowCount < 2)
+                    {
+                        sortedList[i].FollowsData.Remove(sortedList[i].FollowsData[j]);
+                        j--;
+                    }
+                }
+            }
+
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                if (sortedList[i].FollowsData.Count < 1)
+                {
+                    sortedList.Remove(sortedList[i]);
+                    i--;
+                }
+                    
+            }
+            return sortedList;
+        }
+
+        private void TestDataView(List<FollowModel> findResultList, TextBox resultTextBox)
+        {
             // Test message Box
             int iterator = 1;
             string testMessage = string.Empty;
-            foreach (var item in findResultList)
+            SetMessage("Start view method...", false, resultTextBox);
+
+            for (int i = 0; i < findResultList.Count; i++)
             {
-                foreach (var follows in item.FollowsData)
+                testMessage += $"Owner name: {findResultList[i].PageOwnerName}\n";
+
+                for (int data = 0; data < findResultList[i].FollowsData.Count; data++)
                 {
-                    if (follows.SameFollowCount > 1)
+                    testMessage += "--------------------------------------------\n";
+
+                    testMessage += $"Finded people count: {iterator} / {findResultList[i].FollowsData.Count}\n";
+
+                    testMessage += $"Finded person name: {findResultList[i].FollowsData[data].FollowName}\n";
+                    testMessage += $"Finded page same count: {findResultList[i].FollowsData[data].SameFollowCount}\n";
+                    testMessage += $"Where this follows more are?: ";
+
+                    for (int j = 0; j < findResultList[i].FollowsData[data].SameFollowPeople.Count; j++)
                     {
-                        testMessage += "--------------------------------------------\n";
-
-                        testMessage += $"Finded people count: {iterator} / {findResultList.Count}\n";
-                        testMessage += $"Owner name: {item.PageOwnerName}\n";
-
-                        testMessage += $"Finded person name: {follows.FollowName}\n";
-                        testMessage += $"Finded page same count: {follows.SameFollowCount}\n";
-                        testMessage += $"Where this follows more are?: ";
-
-                        foreach (var samePeopleFollow in follows.SameFollowPeople)
-                        {
-                            testMessage += $"@{samePeopleFollow}@ , ";
-                        }
-
-                        testMessage += $"\n--------------------------------------------\n\n";
+                        testMessage += $"@{findResultList[i].FollowsData[data].SameFollowPeople[j]}@   ";
                     }
-                }
-                
-            }
 
-            //if (string.IsNullOrWhiteSpace(testMessage))
-            //    testMessage = "Same content not found! Sorry..";
+                    testMessage += $"\n--------------------------------------------\n\n";
+                    iterator++;
+                }
+            }
 
             SetMessage(testMessage, true, resultTextBox);
             findResultList.Clear();
@@ -103,7 +149,7 @@ namespace InstagrammPasper.Classes
 
         private void SetMessage(string newMessage, bool isPlusEquals, TextBox resultTextBox)
         {
-            resultTextBox.Dispatcher.Invoke(() => 
+            resultTextBox.Dispatcher.Invoke(() =>
             {
                 if (!isPlusEquals)
                     resultTextBox.Text = newMessage;
@@ -114,7 +160,10 @@ namespace InstagrammPasper.Classes
                 }
             });
         }
-
-        // TODO: Convert and save in XML file
     }
 }
+
+// TODO: Convert and save in XML file
+
+
+
