@@ -186,7 +186,9 @@ namespace InstagrammPasper
                 List<string> listDeserialize;
 
                 string tempString = PageLinkBlock.Text;
-                var tempArrayLinks = tempString.Replace("\r\n", ",").Split(',').ToList();
+                List<string> tempArrayLinks = tempString.Replace("\r\n", ",")
+                                                        .Split(',')
+                                                        .ToList();
 
                 // Create JSON file if not exists
                 if (!File.Exists(pathToFile))

@@ -15,7 +15,7 @@ namespace InstagrammPasper.Classes
         {
             List<FollowModel> resultList = new List<FollowModel>();
 
-            showResultButton.Dispatcher.Invoke(() =>
+            showResultButton?.Dispatcher.Invoke(() =>
             {
                 showResultButton.IsEnabled = false;
             });

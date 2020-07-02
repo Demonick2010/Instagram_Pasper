@@ -10,7 +10,7 @@
     <Product>Instagramm following page pasper</Product>
     <Description>Grab all following data by page link source, convert and save all to JSON file and save same data to XML file.</Description>
     <Copyright>Demonick Games. All Rights Reserved!</Copyright>
-    <NeutralLanguage>English</NeutralLanguage>
+    <NeutralLanguage></NeutralLanguage>
     <AssemblyVersion>0.3.1.0</AssemblyVersion>
   </PropertyGroup>
 
