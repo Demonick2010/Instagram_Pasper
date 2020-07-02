@@ -126,6 +126,9 @@ namespace InstagrammPasper.Classes
                 // Go to parsing page
                 driver.Navigate().GoToUrl(PageLinkArray.PageListLink[i]);
 
+                // Add message
+                SetMessage($"Open page {PageLinkArray.PageListLink[i]} successful", false, resultTextBox);
+
                 // Find parent container in page
                 var headerBlock = driver.FindElement(By.TagName("header"));
 
@@ -139,6 +142,8 @@ namespace InstagrammPasper.Classes
 
                 // Check for null and click
                 allLink[2].Click();
+
+                SetMessage($"Open the follows window success", true, resultTextBox);
 
                 // Scroll to down
                 var modalElement = driver.FindElement(By.XPath("//body/div[@role='presentation']/div[@role='dialog']//ul"));
@@ -173,6 +178,7 @@ namespace InstagrammPasper.Classes
 
                         if (tryTimes > 3)
                         {
+                            SetMessage($"Scrolling complete.", false, resultTextBox);
                             tryTimes = 0;
                             break;
                         }
@@ -202,8 +208,14 @@ namespace InstagrammPasper.Classes
                 }
 
                 // Parse peoples to model and to list
+                SetMessage($"Parse the Links data from page, Please, wait ...", true, resultTextBox);
+
                 var followsLinksObj =
                     driver.FindElements(By.XPath("/html/body/div[@role='presentation']/div[@role='dialog']//ul/div/li/div/div/div[2]//div/a"));
+
+                SetMessage($"Links parse to object complete. Links count: {followsLinksObj.Count}", true, resultTextBox);
+
+                SetMessage($"Parse the Names data from page, Please, wait ...", true, resultTextBox);
 
                 var followsNameObj =
                     driver.FindElements(By.XPath("/html/body/div[@role='presentation']/div[@role='dialog']//ul/div/li/div/div/div[2]//div[2]"));
@@ -212,6 +224,10 @@ namespace InstagrammPasper.Classes
                 {
                     PageOwnerName = pageName
                 };
+
+                SetMessage($"Parsing complete!", true, resultTextBox);
+
+                SetMessage($"Start adding data to model, Please Wait ...", true, resultTextBox);
 
                 for (int j = 0; j < followsLinksObj.Count; j++)
                 {
@@ -227,11 +243,11 @@ namespace InstagrammPasper.Classes
                         FollowName = name,
                         FollowPageAddress = link,
                         SameFollowCount = 0
-                        //SameFollowPeople = null
                     });
                 }
 
                 FollowsList.Follows.Add(flm);
+                SetMessage($"Adding complete", true, resultTextBox);
             }
 
             DoneActionList.StartParseIsDone = true;
@@ -243,6 +259,8 @@ namespace InstagrammPasper.Classes
         private void SaveDataToJson(IWebDriver driver, TextBox resultTextBox)
         {
             ConstantPaths paths = new ConstantPaths();
+
+            SetMessage($"Start to serialize data to JSON file ...", true, resultTextBox);
 
             // Create paths
             string jsonFileName = "parsedFollowersList.json";

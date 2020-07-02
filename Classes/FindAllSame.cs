@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,9 +11,14 @@ namespace InstagrammPasper.Classes
     public class FindAllSame
     {
         // Take same peoples from all lists
-        public async void GetAllSomeData(TextBox resultTextBox)
+        public async void GetAllSomeData(TextBox resultTextBox, Button showResultButton)
         {
             List<FollowModel> resultList = new List<FollowModel>();
+
+            showResultButton.Dispatcher.Invoke(() =>
+            {
+                showResultButton.IsEnabled = false;
+            });
 
             await Task.Run(() =>
             {
@@ -30,6 +36,10 @@ namespace InstagrammPasper.Classes
                     TestDataView(resultList, resultTextBox);
                 else
                     SetMessage("Result list is empty...", false, resultTextBox);
+            });
+            await Task.Run(() =>
+            {
+                SaveToJson(resultList, resultTextBox);
             });
         }
 
@@ -114,7 +124,7 @@ namespace InstagrammPasper.Classes
 
         private void TestDataView(List<FollowModel> findResultList, TextBox resultTextBox)
         {
-            // Test message Box
+            // Final message to the Box
             int iterator = 1;
             string testMessage = string.Empty;
             SetMessage("Start view method...", false, resultTextBox);
@@ -131,20 +141,21 @@ namespace InstagrammPasper.Classes
 
                     testMessage += $"Finded person name: {findResultList[i].FollowsData[data].FollowName}\n";
                     testMessage += $"Finded page same count: {findResultList[i].FollowsData[data].SameFollowCount}\n";
-                    testMessage += $"Where this follows more are?: ";
+                    testMessage += $"Where this follows more are?: \n";
 
                     for (int j = 0; j < findResultList[i].FollowsData[data].SameFollowPeople.Count; j++)
                     {
-                        testMessage += $"@{findResultList[i].FollowsData[data].SameFollowPeople[j]}@   ";
+                        testMessage += $"@{findResultList[i].FollowsData[data].SameFollowPeople[j]}@\n";
                     }
 
-                    testMessage += $"\n--------------------------------------------\n\n";
+                    testMessage += $"--------------------------------------------\n\n";
                     iterator++;
                 }
+
+                iterator = 1;
             }
 
             SetMessage(testMessage, true, resultTextBox);
-            findResultList.Clear();
         }
 
         private void SetMessage(string newMessage, bool isPlusEquals, TextBox resultTextBox)
@@ -159,6 +170,36 @@ namespace InstagrammPasper.Classes
                     resultTextBox.ScrollToEnd();
                 }
             });
+        }
+
+        private void SaveToJson(List<FollowModel> findResultModel, TextBox resultTextBox)
+        {
+            SetMessage("Set all paths to JSON file ...", true, resultTextBox);
+
+            string fileName = "resultList.json";
+            ConstantPaths cp = new ConstantPaths();
+            string fullPath = cp.GetFullPath(fileName);
+
+            // Create JSON file if not exists
+            if (!File.Exists(fullPath))
+            {
+                var file = File.Create(fullPath);
+                file.Close();
+            }
+            else
+            {
+                File.Delete(fullPath);
+
+                var file = File.Create(fullPath);
+                file.Close();
+            }
+
+            SetMessage("Start serializing to JSON format ...", true, resultTextBox);
+
+            UniversalSerializeDataClass<List<FollowModel>> serializeData = new UniversalSerializeDataClass<List<FollowModel>>();
+            serializeData.SerializeData(findResultModel, fullPath);
+
+            SetMessage("Save JSON file action complete! Well done!", true, resultTextBox);
         }
     }
 }

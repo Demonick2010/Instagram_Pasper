@@ -151,14 +151,10 @@ namespace InstagrammPasper
         {
             FindAllSame findAllSame = new FindAllSame();
 
-            ShowResult.IsEnabled = false;
-
             await Task.Run(() =>
             {
-                findAllSame.GetAllSomeData(GeTextBox());
+                findAllSame.GetAllSomeData(GeTextBox(), ShowResult);
             });
-
-            ShowResult.IsEnabled = true;
         }
     }
 }
