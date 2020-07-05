@@ -20,12 +20,4 @@ namespace InstagrammPasper.Models
     {
         public static List<FollowModel> Follows { get; set; } = new List<FollowModel>();
     }
-
-    public class FollowDataToSorting
-    {
-        public string FollowName { get; set; }
-        public string FollowPageAddress { get; set; }
-        public int SameFollowCount { get; set; }
-        public string SameFollowPeople { get; set; }
-    }
 }

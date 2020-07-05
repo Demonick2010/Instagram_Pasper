@@ -4,10 +4,8 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Controls;
 using static InstagrammPasper.Classes.AppMessages;
 
@@ -100,8 +98,6 @@ namespace InstagrammPasper.Classes
 
                     while ((row - 5) < rowData.Count)
                     {
-                        int col = 1;
-
                         // our query has the columns in the right order, so simply
                         // iterate through the columns
                         for (int i = 1; i <= cp.ColumNames.Length; i++)
@@ -150,7 +146,7 @@ namespace InstagrammPasper.Classes
             SetMessage($"Save data success to convert and save in Excel file!\nFile path is: {fullPath}", true, resultTextBox);
         }
 
-        private string GetRowData(FollowData model, int counter)
+        private static string GetRowData(FollowData model, int counter)
         {
             switch (counter)
             {
@@ -175,7 +171,7 @@ namespace InstagrammPasper.Classes
             return null;
         }
 
-        private List<FollowModel> GetDataFromJson(TextBox resultTextBox)
+        private static List<FollowModel> GetDataFromJson(TextBox resultTextBox)
         {
             ConstantPaths cp = new ConstantPaths();
 

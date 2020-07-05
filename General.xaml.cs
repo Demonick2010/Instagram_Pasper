@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,12 +15,9 @@ namespace InstagrammPasper
     /// </summary>
     public partial class General : Window
     {
-        Thread MainThread = null;//for reference
-
         public General()
         {
             InitializeComponent();
-            MainThread = Thread.CurrentThread;
         }
 
         // Get result block in all program places

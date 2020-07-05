@@ -9,6 +9,20 @@
         MouseLeftButtonDown="Window_Left_Mouse_Down" Background="{x:Null}"
         Title="Instagram Pasper" Height="450" Width="800" ResizeMode="CanResizeWithGrip" Initialized="InitData">
 
+    <Window.Resources>
+        <ControlTemplate x:Key="roundbutton" TargetType="Button">
+            <Grid>
+                <Ellipse x:Name="backgroundElement" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}" />
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
@@ -21,25 +35,52 @@
 
         <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="2">
             <StackPanel.Background>
-                <ImageBrush ImageSource="/instaBg.jpg" />
+                <ImageBrush ImageSource="Resources/instaBg.jpg" />
             </StackPanel.Background>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" >
-            <Border BorderBrush="AliceBlue" BorderThickness="4" ></Border>
-            <TextBox x:Name="ResultBlock" Text="" Background="#FFD4D4D4" Height="124" Width="458" VerticalAlignment="Top" Margin="10 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch" FontSize="16" FontWeight="Bold" />
+            <TextBox x:Name="ResultBlock" Text="" Height="127" Width="533" VerticalAlignment="Center" Margin="10 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="0,10,0,10" >
+                <TextBox.Background>
+                    <ImageBrush ImageSource="/Resources/bgtb.jpg"/>
+                </TextBox.Background>
+            </TextBox>
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" >
-            <Button Grid.Row="2" x:Name="Pasper" Content="Start parse" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="Pasper_Click"></Button>
-            <Button x:Name="ShowResult" Content="Show Result" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="ShowResult_Click" IsEnabled="True"/>
-            <Button x:Name="ConvertToExcel" Content="Convert to Excel" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="ConvertToExcel_Click" IsEnabled="True"/>
+            <Button Grid.Row="2" x:Name="Pasper" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="Pasper_Click" Cursor="Hand" ToolTip="Start Parse Data" BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/GiveData.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="ShowResult" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="ShowResult_Click" IsEnabled="True" Cursor="Hand" ToolTip="Show Data">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/ShowData.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="ConvertToExcel" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Left" VerticalAlignment="Center"  MinHeight="100" MinWidth="100" Margin="10 0 0 0" Click="ConvertToExcel_Click" IsEnabled="True" Cursor="Hand" ToolTip="Save to Excel">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/ConvertAndSave.png"/>
+                </Button.Background>
+            </Button>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Grid.RowSpan="2">
-            <Button x:Name="Settings" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" RenderTransformOrigin="0.5,0.5" Click="Settings_Click"></Button>
-            <Button x:Name="About" Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0"></Button>
-            <Button x:Name="Quit" Content="Quit" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" Click="Quit_Click"></Button>
+            <Button x:Name="Settings" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" RenderTransformOrigin="0.5,0.5" Click="Settings_Click" Cursor="Hand" ToolTip="Settings">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Settings.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="About" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" Cursor="Hand" ToolTip="About Developer">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/About.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Quit" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" Click="Quit_Click" Cursor="Hand" ToolTip="Quit">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Resources/Quit.png"/>
+                </Button.Background>
+            </Button>
         </StackPanel>
 
 

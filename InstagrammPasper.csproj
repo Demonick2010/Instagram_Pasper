@@ -4,18 +4,31 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>0.3.0</Version>
+    <Version>0.5.1</Version>
     <Authors>Artem Ionov</Authors>
     <Company>Demonick Games</Company>
     <Product>Instagramm following page pasper</Product>
     <Description>Grab all following data by page link source, convert and save all to JSON file and save same data to XML file.</Description>
     <Copyright>Demonick Games. All Rights Reserved!</Copyright>
     <NeutralLanguage></NeutralLanguage>
-    <AssemblyVersion>0.3.1.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <FileVersion>0.5.1.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>3</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="instaBg.jpg" />
+    <None Remove="GiveData.png" />
+    <None Remove="Resources\About.png" />
+    <None Remove="Resources\bgtb.jpg" />
+    <None Remove="Resources\ConvertAndSave.png" />
+    <None Remove="Resources\GiveData.png" />
+    <None Remove="Resources\instaBg.jpg" />
+    <None Remove="Resources\Quit.png" />
+    <None Remove="Resources\Settings.png" />
+    <None Remove="Resources\ShowData.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +45,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="instaBg.jpg" />
+    <Resource Include="GiveData.png" />
+    <Resource Include="Resources\About.png" />
+    <Resource Include="Resources\bgtb.jpg" />
+    <Resource Include="Resources\ConvertAndSave.png" />
+    <Resource Include="Resources\GiveData.png" />
+    <Resource Include="Resources\instaBg.jpg" />
+    <Resource Include="Resources\Quit.png" />
+    <Resource Include="Resources\Settings.png" />
+    <Resource Include="Resources\ShowData.png" />
   </ItemGroup>
 
 </Project>

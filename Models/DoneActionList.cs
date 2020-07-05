@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InstagrammPasper.Models
+﻿namespace InstagrammPasper.Models
 {
     public static class DoneActionList
     {
