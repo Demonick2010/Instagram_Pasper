@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,9 +16,12 @@ namespace InstagrammPasper
     /// </summary>
     public partial class General : Window
     {
+        Thread MainThread = null;//for reference
+
         public General()
         {
             InitializeComponent();
+            MainThread = Thread.CurrentThread;
         }
 
         // Get result block in all program places
@@ -154,6 +158,15 @@ namespace InstagrammPasper
             await Task.Run(() =>
             {
                 findAllSame.GetAllSomeData(GeTextBox(), ShowResult);
+            });
+        }
+
+        private async void ConvertToExcel_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                ConvertToExcelFunctionality convertToExcel = new ConvertToExcelFunctionality();
+                convertToExcel.ConvertToExcel(GeTextBox());
             });
         }
     }

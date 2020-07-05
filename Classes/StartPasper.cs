@@ -8,6 +8,7 @@ using InstagrammPasper.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.Extensions;
+using static InstagrammPasper.Classes.AppMessages;
 
 namespace InstagrammPasper.Classes
 {
@@ -291,20 +292,6 @@ namespace InstagrammPasper.Classes
             driver.Quit();
 
             SetMessage($"All data saved!\nWell done!\nPeople count: {FollowsList.Follows.Count}\nNow you can convert to all same addresses to XML", true, resultTextBox);
-        }
-
-        private void SetMessage(string newMessage, bool isPlusEquals, TextBox resultTextBox)
-        {
-            resultTextBox.Dispatcher.Invoke(() => 
-            {
-                if (!isPlusEquals)
-                    resultTextBox.Text = newMessage;
-                else
-                {
-                    resultTextBox.Text += "\n" + newMessage;
-                    resultTextBox.ScrollToEnd();
-                }
-            });
         }
     }
 }

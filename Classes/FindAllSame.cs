@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using InstagrammPasper.Models;
+using static InstagrammPasper.Classes.AppMessages;
 
 namespace InstagrammPasper.Classes
 {
@@ -158,20 +157,6 @@ namespace InstagrammPasper.Classes
             SetMessage(testMessage, true, resultTextBox);
         }
 
-        private void SetMessage(string newMessage, bool isPlusEquals, TextBox resultTextBox)
-        {
-            resultTextBox.Dispatcher.Invoke(() =>
-            {
-                if (!isPlusEquals)
-                    resultTextBox.Text = newMessage;
-                else
-                {
-                    resultTextBox.Text += "\n" + newMessage;
-                    resultTextBox.ScrollToEnd();
-                }
-            });
-        }
-
         private void SaveToJson(List<FollowModel> findResultModel, TextBox resultTextBox)
         {
             SetMessage("Set all paths to JSON file ...", true, resultTextBox);
@@ -203,8 +188,5 @@ namespace InstagrammPasper.Classes
         }
     }
 }
-
-// TODO: Convert and save in XML file
-
 
 
