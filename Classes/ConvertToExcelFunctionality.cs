@@ -143,7 +143,7 @@ namespace InstagrammPasper.Classes
                 }
             }
 
-            SetMessage($"Save data success to convert and save in Excel file!\nFile path is: {fullPath}", true, resultTextBox);
+            SetMessage($"Convert and Save data to Excel file seccessful!\nFile path is: {fullPath}", true, resultTextBox);
         }
 
         private static string GetRowData(FollowData model, int counter)

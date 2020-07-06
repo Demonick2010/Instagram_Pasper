@@ -165,5 +165,11 @@ namespace InstagrammPasper
                 convertToExcel.ConvertToExcel(GeTextBox());
             });
         }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.Show();
+        }
     }
 }

@@ -45,4 +45,8 @@ namespace InstagrammPasper.Models
     {
         public static List<string> PageListLink { get; set; } = new List<string>();
     }
+    public static class AboutTextClass
+    {
+        public static string AboutTextBlock { get; set; } = "How to use the program?\n1. Open settings and write account data and parsing links list.\n2. Save the data and start parse the data (Start Parse Button)\n3. Press 'Show Data' button, and programm delete from parsed file all unnecessary data (followers < 2) and save new data to JSON file.\n4. Press 'Save to Excel' button, and program convert all data to Excel table and give the link.\n\nCreated by DEMONICK. All Rights Reserved!\nEmail: masterprogger87@gmail.com\n";
+    }
 }

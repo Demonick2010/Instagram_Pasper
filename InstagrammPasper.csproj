@@ -4,15 +4,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>0.5.1</Version>
+    <Version>1.0.0</Version>
     <Authors>Artem Ionov</Authors>
     <Company>Demonick Games</Company>
     <Product>Instagramm following page pasper</Product>
     <Description>Grab all following data by page link source, convert and save all to JSON file and save same data to XML file.</Description>
     <Copyright>Demonick Games. All Rights Reserved!</Copyright>
     <NeutralLanguage></NeutralLanguage>
-    <AssemblyVersion>0.5.1.0</AssemblyVersion>
-    <FileVersion>0.5.1.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <ApplicationIcon>programLogo.ico</ApplicationIcon>
+    <PackageIcon>programLogo.jpg</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,15 +22,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="GiveData.png" />
     <None Remove="Resources\About.png" />
+    <None Remove="Resources\AddToList.png" />
     <None Remove="Resources\bgtb.jpg" />
     <None Remove="Resources\ConvertAndSave.png" />
     <None Remove="Resources\GiveData.png" />
     <None Remove="Resources\instaBg.jpg" />
     <None Remove="Resources\Quit.png" />
     <None Remove="Resources\Settings.png" />
+    <None Remove="Resources\SettingsTextBg.png" />
     <None Remove="Resources\ShowData.png" />
+    <None Include="D:\Рабочий стол\programLogo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -45,14 +52,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="GiveData.png" />
     <Resource Include="Resources\About.png" />
+    <Resource Include="Resources\AddToList.png" />
     <Resource Include="Resources\bgtb.jpg" />
     <Resource Include="Resources\ConvertAndSave.png" />
     <Resource Include="Resources\GiveData.png" />
     <Resource Include="Resources\instaBg.jpg" />
     <Resource Include="Resources\Quit.png" />
     <Resource Include="Resources\Settings.png" />
+    <Resource Include="Resources\SettingsTextBg.png" />
     <Resource Include="Resources\ShowData.png" />
   </ItemGroup>
 

@@ -8,6 +8,21 @@
         mc:Ignorable="d"
         MouseLeftButtonDown="Window_Left_Mouse_Down" Background="{x:Null}"
         Title="Settings" Height="450" Width="800" ResizeMode="CanResizeWithGrip" Loaded="InitAccountData">
+    
+    <Window.Resources>
+        <ControlTemplate x:Key="roundbutton" TargetType="Button">
+            <Grid>
+                <Ellipse x:Name="backgroundElement" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}" />
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="99"></RowDefinition>
@@ -17,7 +32,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Grid.ColumnSpan="2" Grid.RowSpan="2">
             <StackPanel.Background>
                 <ImageBrush ImageSource="Resources/instaBg.jpg" />
@@ -31,7 +46,7 @@
         <StackPanel Grid.Row="0" Grid.Column="1">
             <TextBlock Text="Pasper page list" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"></TextBlock>
         </StackPanel>
-        
+
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -45,43 +60,55 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                
+
                 <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Content="Account Username:" FontSize="16" Margin="10 0 0 0" Padding="5"></Label>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0 5 0 5">
                     <TextBox x:Name="UserNameBox" MinWidth="150" LostFocus="UserNameChanged"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Content="Account Password:" FontSize="16" Margin="10 0 0 0" Padding="5"></Label>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0 5 0 5">
                     <PasswordBox x:Name="PasswordBox" MinWidth="150" LostFocus="PasswordChanged"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Content="Save Account?" FontSize="16" Margin="10 0 0 0" Padding="5"></Label>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <CheckBox IsChecked="False" x:Name="IsSaved" VerticalAlignment="Center"></CheckBox>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="SaveButton" Content="Save" Padding="10 5" Click="Save_Click"></Button>
+                    <Button x:Name="SaveButton" Template="{StaticResource roundbutton}" Height="70" Width="70" Content="" Padding="10 5" Click="Save_Click" Cursor="Hand" ToolTip="Save Login and Password">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Resources/ConvertAndSave.png"/>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="Cancel" Content="Cancel/Close" HorizontalAlignment="Center" Click="Cancel_Click"></Button>
+                    <Button x:Name="Cancel" Template="{StaticResource roundbutton}" Height="70" Width="70" Content="" HorizontalAlignment="Center" Click="Cancel_Click" Cursor="Hand" ToolTip="Cancel or Close">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Resources/Quit.png"/>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal" Margin="10">
-                    <Label Content="" x:Name="ErrorLabel" Background="#FFD1D1D1" Height="Auto" MinWidth="340" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Foreground="Red" FontWeight="Bold" FontSize="18"></Label>
+                    <Label Content="" x:Name="ErrorLabel" Height="134" MinWidth="340" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Foreground="Red" FontWeight="Bold" FontSize="18" Width="325" Padding="10,20,10,19" ScrollViewer.CanContentScroll="True">
+                        <Label.Background>
+                            <ImageBrush ImageSource="/Resources/SettingsTextBg.png"/>
+                        </Label.Background>
+                    </Label>
                 </StackPanel>
-                
+
             </Grid>
         </StackPanel>
 
@@ -106,11 +133,15 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="SaveListButton" Content="Save to list" Margin="0 10 0 0" Click="SaveListButton_Click"></Button>
+                    <Button x:Name="SaveListButton" Template="{StaticResource roundbutton}" Height="70" Width="70" Content="" Margin="0 10 0 0" Click="SaveListButton_Click" Cursor="Hand" ToolTip="Add To List">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Resources/AddToList.png"/>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
 
             </Grid>
         </StackPanel>
-                
+
     </Grid>
 </Window>

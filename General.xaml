@@ -25,8 +25,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="22*" />
+            <RowDefinition Height="209*" />
+            <RowDefinition Height="241*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="22*"/>
@@ -39,10 +39,10 @@
             </StackPanel.Background>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" >
-            <TextBox x:Name="ResultBlock" Text="" Height="127" Width="533" VerticalAlignment="Center" Margin="10 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="0,10,0,10" >
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,204" Grid.RowSpan="2" >
+            <TextBox x:Name="ResultBlock" Text="" Width="533" VerticalAlignment="Center" Margin="10 10 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Padding="40,60,32,60" BorderBrush="{x:Null}" Height="232" IsReadOnly="True" >
                 <TextBox.Background>
-                    <ImageBrush ImageSource="/Resources/bgtb.jpg"/>
+                    <ImageBrush ImageSource="/Resources/SettingsTextBg.png"/>
                 </TextBox.Background>
             </TextBox>
         </StackPanel>
@@ -71,7 +71,7 @@
                     <ImageBrush ImageSource="/Resources/Settings.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="About" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" Cursor="Hand" ToolTip="About Developer">
+            <Button x:Name="About" Template="{StaticResource roundbutton}" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" Margin="0 10 0 0" Cursor="Hand" ToolTip="About" Click="About_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/Resources/About.png"/>
                 </Button.Background>
