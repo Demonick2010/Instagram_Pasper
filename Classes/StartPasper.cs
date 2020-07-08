@@ -154,7 +154,7 @@ namespace InstagrammPasper.Classes
 
                 // Needed vars
                 int tryTimes = 0;
-                int scrollDelay = 1500;
+                int scrollDelay = 3000;
                 int listPosition = 12;
 
                 while (true)
@@ -196,6 +196,41 @@ namespace InstagrammPasper.Classes
                     }
                     catch (Exception e)
                     {
+                        //modalElement = driver.FindElement(By.XPath("//body/div[@role='presentation']/div[@role='dialog']//ul"));
+
+                        //var tempModalDialog = driver.FindElement(By.XPath(
+                        //    $"//body/div[@role='presentation']/div[@role='dialog']//ul/div/li[{listPosition}]"));
+
+                        ////Scroll down to bottom
+                        //driver.ExecuteJavaScript("arguments[0].scrollIntoView(true);", tempModalDialog);
+
+                        ////Wait to load page
+                        //Thread.Sleep(scrollDelay);
+
+                        ////Calculate new scroll height and compare with last scroll height
+                        //var newHeight =
+                        //    driver.ExecuteJavaScript<long>("return arguments[0].scrollHeight", modalElement);
+
+                        //if (lastHeight == newHeight)
+                        //    tryTimes += 1;
+
+                        //if (tryTimes > 3)
+                        //{
+                        //    SetMessage($"Scrolling complete.", false, resultTextBox);
+                        //    tryTimes = 0;
+                        //    break;
+                        //}
+
+                        //lastHeight = newHeight;
+
+                        //listPosition += 12;
+
+                        //// Check position count
+                        //if (listPosition > followsCount)
+                        //    listPosition = followsCount;
+
+                        //SetMessage($"Next Scroll follow position is: {listPosition}", true, resultTextBox);
+
                         var followsLinksObjCount =
                             driver.FindElements(By.XPath(
                                 "/html/body/div[@role='presentation']/div[@role='dialog']//ul/div/li/div/div/div[2]//div/a"));
